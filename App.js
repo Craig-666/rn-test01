@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import {Icon, SearchBar, TabBar,Button,Carousel,SegmentedControl, WhiteSpace} from "@ant-design/react-native";
+import Home from './src/pages/home/index'
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -106,7 +107,7 @@ export default class App extends Component<Props> {
               selected={this.state.selectedTab === 'redTab'}
               onPress={() => this.onChangeTab('redTab')}
           >
-            {this.renderContent('Koubei Tab')}
+            <Home/>
           </TabBar.Item>
           <TabBar.Item
               icon={<Icon name="like" />}

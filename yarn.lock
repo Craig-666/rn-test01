@@ -5326,6 +5326,13 @@ react-native-collapsible@^1.4.0:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-fast-image@^4.0.14:
+  version "4.0.14"
+  resolved "http://registry.npm.taobao.org/react-native-fast-image/download/react-native-fast-image-4.0.14.tgz#1e84c9a01b1471793e294ef4e7c3cc20e09562a0"
+  integrity sha1-HoTJoBsUcXk+KU7058PMIOCVYqA=
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-modal-popover@^0.0.12:
   version "0.0.12"
   resolved "http://registry.npm.taobao.org/react-native-modal-popover/download/react-native-modal-popover-0.0.12.tgz#5c0b5e9e0323490c3c5867821fc94b6582bfa3dc"
