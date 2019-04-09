@@ -52,7 +52,6 @@ export default class VideoPage extends Component {
     return(
       <View>
          <Video
-         
             source={{
               uri: 'http://live6.plus.hebtv.com/cctv12/sd/live.m3u8',
             }}
@@ -68,8 +67,10 @@ export default class VideoPage extends Component {
                 <View style = {styles.videoView}>
                   <View style={styles.topView}>
                     <View style={styles.zhubo}>
-                      <AntDesign name='user' size={20} color={'#00ff00'}/>
-                      <Text>杭州公司直播</Text>
+                      <View style={styles.avtor}>
+                        <AntDesign name='user' size={30} color={'#fff'}/>
+                      </View>
+                      <Text style={styles.topText} >杭州公司直播</Text>
                     </View>
                     <View style={styles.videoInfo}>
                       <AntDesign name='user' size={20} color={'#f0f000'}/>
@@ -118,6 +119,25 @@ export default class VideoPage extends Component {
   }
 }
 const styles = StyleSheet.create({
+  topText:{
+    marginLeft:10,
+    lineHeight:45,
+  },
+  topView:{
+    justifyContent:'space-between',
+    flexDirection:'row',
+    padding:20,
+  },
+  avtor:{
+    justifyContent:'center',
+    alignItems:'center',
+    height:45,
+    width:45,
+    borderRadius:22,
+    backgroundColor:'#000',
+    borderColor:'#ccc',
+    borderWidth:1,
+  },
   btns:{
     width:100,
     flexDirection:"row",
@@ -175,15 +195,11 @@ const styles = StyleSheet.create({
   },
   videoInfo:{
     flexDirection:'row',
+    lineHeight:45,
   },
   zhubo:{
     flexDirection:'row',
     justifyContent:"center"
   },
-  topView:{
-    justifyContent:'space-between',
-    flexDirection:'row',
-    padding:20,
-
-  }
+ 
 })
