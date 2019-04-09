@@ -12,16 +12,16 @@ export default class VideoPage extends Component {
       selectedTab: 'blueTab',
       watch:100,
       charts:[{
-        name:"小张",
+        name:"刘备份-👑👑",
         text:"好漂亮👏👏👏👏"
       },
       {
-        name:"小张",
-        text:"好漂亮👏👏👏👏"
+        name:"关羽扇纶巾",
+        text:"东西不错，贵不贵"
       },
       {
-        name:"小张",
-        text:"好漂亮👏👏👏👏"
+        name:"张飞机",
+        text:"好吃再来"
       }]
     };
 
@@ -35,8 +35,7 @@ export default class VideoPage extends Component {
     charts.map((e,i)=>{
       dms.push(
         <View key={'dm'+i} style={styles.dmText}>
-          <Text>{e.name + " : "}</Text>
-          <Text>{e.text}</Text>
+          <Text style={styles.dmiText}>{e.name + ":"+e.text}</Text>
         </View>
       )
     })
@@ -70,15 +69,16 @@ export default class VideoPage extends Component {
                       <View style={styles.avtor}>
                         <AntDesign name='user' size={30} color={'#fff'}/>
                       </View>
-                      <Text style={styles.topText} >杭州公司直播</Text>
+                      <View style={styles.avtorText}>
+                        <Text style={styles.topText} >杭州公司直播</Text>
+                        <Text style={styles.zaixian} >100人在线</Text>
+                      </View>
                     </View>
                     <View style={styles.videoInfo}>
-                      <AntDesign name='user' size={20} color={'#f0f000'}/>
-                      <AntDesign name='user' size={20} color={'#ff0000'}/>
-                      <AntDesign name='user' size={20} color={'#0000ff'}/>
-
-                      <Text>100人正在看直播</Text>
-                      <AntDesign name='close' size={20} color={'#00ff00'}/>
+                      <AntDesign name='smile-circle' size={20} color={'#fff'}/>
+                      <AntDesign name='smile-circle' size={20} color={'#fff'}/>
+                      <AntDesign name='smile-circle' size={20} color={'#fff'}/>
+                      <Text style={styles.watching}>100人正在看直播</Text>
                     </View>
                   </View>
                 
@@ -87,7 +87,8 @@ export default class VideoPage extends Component {
                       {this.renderDanmu()}
                     </View>
                     <View style={styles.forms}>
-                      <View>
+                      <View style={styles.inputView}>
+                      <AntDesign name='message1' size={22} color={'#fff'}/>
                         <TextInput
                         style={styles.input}
                               editable = {true}
@@ -97,19 +98,16 @@ export default class VideoPage extends Component {
                       
                         <View style = {styles.btns}>
                         <TouchableHighlight style={styles.btmBtn} onPress={this.onPressButton()}>
-                          <AntDesign name='sharealt' size={30} color={'#f1aaa6'}/>
+                          <AntDesign name='sharealt' size={22} color={'#fff'}/>
                         </TouchableHighlight>
 
                         <TouchableHighlight style={styles.btmBtn} onPress={this.onPressButton()}>
-                          <AntDesign name='gift' size={30} color={'#f1aaa6'}/>
+                          <AntDesign name='gift' size={22} color={'#fff'}/>
                         </TouchableHighlight>
 
-                        <TouchableHighlight style={styles.btmBtn} onPress={this.onPressButton()}>
-                          <AntDesign name='wallet' size={30} color={'#f1aaa6'}/>
-                        </TouchableHighlight>
 
                         <TouchableHighlight style={styles.btmBtn} onPress={this.onPressButton()}>
-                          <AntDesign name='heart' size={30} color={'#ff6e97'}/>
+                          <AntDesign name='heart' size={22} color={'#ec4e6b'}/>
                         </TouchableHighlight>
                         </View>
                     </View>
@@ -119,21 +117,44 @@ export default class VideoPage extends Component {
   }
 }
 const styles = StyleSheet.create({
+  inputView:{
+    height:32,
+    borderRadius:16,
+    padding:5,
+    backgroundColor:"rgba(100, 100, 100, 0.6)",
+  },
   topText:{
     marginLeft:10,
-    lineHeight:45,
+    fontSize:15,
+    color:'#fff'
+  },
+  watching:{
+    color:'#fff'
+
+  },
+  zaixian:{
+    fontSize:13,
+    marginLeft:10,
+    color:'#fff'
+  },
+  avtorText:{
+    height:37,
+    flexDirection:'column',
+    justifyContent:'space-around',
+
   },
   topView:{
     justifyContent:'space-between',
     flexDirection:'row',
-    padding:20,
+    height:37,
   },
   avtor:{
     justifyContent:'center',
     alignItems:'center',
-    height:45,
-    width:45,
-    borderRadius:22,
+    marginLeft:10,
+    height:36,
+    width:36,
+    borderRadius:18,
     backgroundColor:'#000',
     borderColor:'#ccc',
     borderWidth:1,
@@ -144,21 +165,34 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   btmBtn:{
-    marginRight:10
+    height:36,
+    width:36,
+    borderRadius:18,
+    backgroundColor:"rgba(100, 100, 100, 0.6)",
+    marginRight:8,
+    padding:7,
+    marginLeft:8
   },
   input:{
     flex:1,
     width:120,
     display:'flex',
-    borderColor:'#fff',
+    color:'#fff',
     borderWidth:0,
-    borderBottomWidth:1,
     fontSize:20,
+  },
+  dmiText:{
+    color:'#fff'
   },
   dmText:{
     flexDirection:'row',
-    marginTop:20,
-    backgroundColor:"rgba(152, 152, 152, 0.8)",
+    marginTop:8,
+    paddingTop:5,
+    paddingBottom:5,
+    paddingLeft:10,
+    color:'#fff',
+    paddingRight:10,
+    backgroundColor:"rgba(100, 100, 100, 0.6)",
     borderRadius:10
   },
   backgroundVideo:{
@@ -167,7 +201,7 @@ const styles = StyleSheet.create({
     left:0,
     bottom:0,
     width:"100%",
-    backgroundColor:"#ccc",
+    backgroundColor:"#000",
   },
   forms:{
     position:'absolute',
@@ -183,7 +217,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     height:300,
     left:30,
-    right:200,
+    width:200,
     bottom:100,
   },
   videoView:{
@@ -195,6 +229,8 @@ const styles = StyleSheet.create({
   },
   videoInfo:{
     flexDirection:'row',
+    marginRight:20,
+    justifyContent:"space-between",
     lineHeight:45,
   },
   zhubo:{
