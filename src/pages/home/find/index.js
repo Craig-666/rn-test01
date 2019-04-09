@@ -141,9 +141,13 @@ export default class ContentWaterfall extends React.Component {
                     placeholder={{uri: 'placeholder'}}
                     style={{width: itemWidth, height: itemHeight, borderRadius: 4}}
                 />
-                <View style={styles.itemText}>
-                    <Text style={{color: '#fff'}}>{secToTime(item.video.duration)}</Text>
-                    <Text style={{color: '#fff'}}>{item.comment}</Text>
+                {/*<View style={styles.itemText}>*/}
+                    {/*<Text style={{color: '#fff'}}>{secToTime(item.video.duration)}</Text>*/}
+                    {/*<Text style={{color: '#fff'}}>{item.comment}</Text>*/}
+                {/*</View>*/}
+                <View style={styles.imgInfo}>
+                    <Text>小姐姐的铺子</Text>
+                    <Icon name={'heart'} size={14} color={'red'}>5678</Icon>
                 </View>
             </TouchableOpacity>
         )
@@ -176,4 +180,14 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4
     },
+    imgInfo:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4,
+        height:40,
+        paddingHorizontal: 10,
+    }
 })

@@ -1,3 +1,5 @@
+
+<script src="http://localhost:8097"/>
 import React, {Component} from 'react';
 import {createStackNavigator} from 'react-navigation'
 import List from './find'
