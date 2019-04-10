@@ -15,9 +15,9 @@ type Column = {
     heights: Array<number>,
 };
 const VIEWABILITY_CONFIG = {
-	minimumViewTime: 30,
-	viewAreaCoveragePercentThreshold: 100,
-	waitForInteraction: false,
+	minimumViewTime: 10,
+	viewAreaCoveragePercentThreshold: 50,
+	waitForInteraction: true,
 };
 const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
     const columns: Array<Column> = Array.from({
@@ -123,7 +123,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _scrollRef: ?ScrollView;
     _endsReached = 0;
     vitem =[]
-
+    scrolling=false
     componentWillReceiveProps(newProps: Props) {
         this.setState(_stateFromProps(newProps));
     }
@@ -222,10 +222,34 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItemCount = data => data.length;
 
     _getItem = (data, index) => data[index];
-
-    scrend =()=>{
-      console.log('tinggggg');
-      this.vitem.length>0 && this.props.playItemVideo(this.vitem[0].id)
+    scrend =(type)=>{
+      if(this.vitem.length==0){ return }
+      
+      if (type == 'ds') {
+        // drag start 运动开始
+        this.scrolling = true  
+      }
+      if (type == 'de') {
+        // drag end 抬手
+        this.scrolling = false
+        setTimeout(()=>{
+          if(!this.scrolling){
+            console.log('doplay-d');
+            this.scrolling = false
+            this.props.playItemVideo(this.vitem[0].id)
+          }          
+        },100);
+      }else if (type == 'se') {
+        // scroll end 滚动停止
+        console.log('doplay');
+        this.scrolling = false
+        this.props.playItemVideo(this.vitem[0].id)
+      }else if(type == 'scrolling'){
+        // 滚动
+          if (this.scrolling == false) {
+            this.scrolling = true    
+          }
+      }
     }
     _captureScrollRef = ref => (this._scrollRef = ref);
     render() {
@@ -254,7 +278,12 @@ export default class MasonryList extends React.Component<Props, State> {
                         ref={ref => (this._listRefs[col.index] = ref)}
                         key={`$col_${col.index}`}
                         data={col.data}
-                        onMomentumScrollEnd = {()=>this.scrend()}
+                        onScrollBeginDrag= {()=>this.scrend('ds')}
+                        onScrollEndDrag = {()=>this.scrend('de')}
+                        onMomentumScrollBegin ={()=>this.scrend('ss')}
+                        onMomentumScrollEnd = {()=>this.scrend('se')}
+                        onScroll = {()=>this.scrend('scrolling')}
+                        
                         getItemCount={this._getItemCount}
                         getItem={this._getItem}
                         getItemLayout={(data, index) =>
