@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity,Platform} from "react-native";
 import {Icon,SegmentedControl} from '@ant-design/react-native'
 import MasonryList from '../../../components/MasonryList/index';
-import PlacehoderImage from '../../../components/MasonryList/PlaceholderImage';
+import VideoCard from '../../../components/videoItem/videoItem';
 
 const {width, height} = Dimensions.get('window');
 
@@ -80,7 +80,6 @@ export default class ContentWaterfall extends React.Component {
 
     _onMomentumScrollEnd = ()=>{
         // alert()
-        console.log(this.refs)
     }
 
     render() {
@@ -148,24 +147,11 @@ export default class ContentWaterfall extends React.Component {
     _renderItem = ({item}) => {
         const itemHeight = this._getHeightForItem({item});
         return (
-            <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => this._onPressContent(item)}
-                style={styles.item}>
-                <PlacehoderImage
-                    source={{uri: item.video.thumbnail[0]}}
-                    placeholder={{uri: 'placeholder'}}
-                    style={{width: itemWidth, height: itemHeight, borderRadius: 4}}
-                />
-                {/*<View style={styles.itemText}>*/}
-                    {/*<Text style={{color: '#fff'}}>{secToTime(item.video.duration)}</Text>*/}
-                    {/*<Text style={{color: '#fff'}}>{item.comment}</Text>*/}
-                {/*</View>*/}
-                <View style={styles.imgInfo}>
-                    <Text>小姐姐的铺子</Text>
-                    <Icon name={'heart'} size={14} color={'red'}>5678</Icon>
-                </View>
-            </TouchableOpacity>
+          <VideoCard 
+          onPress = {()=>{this._onPressContent(item)}}
+          item = {item}
+          height={itemHeight}
+          />
         )
     }
 

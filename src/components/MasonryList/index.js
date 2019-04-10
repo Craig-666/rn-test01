@@ -14,7 +14,11 @@ type Column = {
     data: Array<any>,
     heights: Array<number>,
 };
-
+const VIEWABILITY_CONFIG = {
+	minimumViewTime: 30,
+	viewAreaCoveragePercentThreshold: 100,
+	waitForInteraction: false,
+};
 const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
     const columns: Array<Column> = Array.from({
         length: numColumns,
@@ -194,7 +198,16 @@ export default class MasonryList extends React.Component<Props, State> {
                 list && list._onMomentumScrollEnd && list._onMomentumScrollEnd(event),
         );
     };
-
+    _onViewableItemsChanged = (changed) => {
+      let it = changed.viewableItems
+      let indexforview = []
+      for (let index = 0; index < it.length; index++) {
+        const element = it[index].key;
+        indexforview.push(element)
+        
+      }
+          console.log('changedf====',indexforview);
+        }
     _getItemLayout = (columnIndex, rowIndex) => {
         const column = this.state.columns[columnIndex];
         let offset = 0;
@@ -209,7 +222,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItemCount = data => data.length;
 
     _getItem = (data, index) => data[index];
-
+  
     _captureScrollRef = ref => (this._scrollRef = ref);
     render() {
         const {
@@ -246,6 +259,9 @@ export default class MasonryList extends React.Component<Props, State> {
                         renderScrollComponent={this._renderScrollComponent}
                         keyExtractor={keyExtractor}
                         onEndReached={onEndReached}
+                        onViewableItemsChanged={this._onViewableItemsChanged}
+                        viewabilityConfig={VIEWABILITY_CONFIG}
+
                         onEndReachedThreshold={this.props.onEndReachedThreshold}
                         removeClippedSubviews={false}
                     />,

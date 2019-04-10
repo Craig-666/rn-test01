@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {TextInput,TouchableHighlight, StyleSheet, Text, View} from 'react-native';
 import Video from 'react-native-video';
+import Toast, {DURATION} from 'react-native-easy-toast'
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native'
 var {height,width} =  Dimensions.get('window');
@@ -28,6 +30,8 @@ export default class VideoPage extends Component {
   }
   videoError(e){
     console.log('verror',e);
+    this.refs.toast.show('直播暂时无法直播!');
+
   }
   renderDanmu(){
     let dms = []
@@ -112,6 +116,7 @@ export default class VideoPage extends Component {
                         </View>
                     </View>
                 </View>
+                <Toast ref="toast"/>
       </View>
     )
   }
