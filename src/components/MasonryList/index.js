@@ -224,6 +224,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItem = (data, index) => data[index];
 
     scrend =()=>{
+      console.log('tinggggg');
       this.vitem.length>0 && this.props.playItemVideo(this.vitem[0].id)
     }
     _captureScrollRef = ref => (this._scrollRef = ref);
@@ -254,7 +255,6 @@ export default class MasonryList extends React.Component<Props, State> {
                         key={`$col_${col.index}`}
                         data={col.data}
                         onMomentumScrollEnd = {()=>this.scrend()}
-                        onScrollEndDrag = {()=>this.scrend()}
                         getItemCount={this._getItemCount}
                         getItem={this._getItem}
                         getItemLayout={(data, index) =>

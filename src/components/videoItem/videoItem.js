@@ -21,7 +21,6 @@ export default class VideoItem extends Component {
       }
     }
     render() {
-      
       const {item,height,play} = this.props
       const {id} = item
         return (
