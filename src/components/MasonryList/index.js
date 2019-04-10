@@ -211,7 +211,6 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItem = (data, index) => data[index];
 
     _captureScrollRef = ref => (this._scrollRef = ref);
-
     render() {
         const {
             renderItem,

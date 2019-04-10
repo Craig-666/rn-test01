@@ -5,6 +5,7 @@
  * @format
  * @flow
  */
+<script src="http://192.168.101.61:8097"></script>
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import {Icon, SearchBar, TabBar,Button,Carousel,SegmentedControl, WhiteSpace} from "@ant-design/react-native";

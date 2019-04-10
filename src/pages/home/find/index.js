@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity,SegmentedControlIOS} from "react-native";
+import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity,Platform} from "react-native";
 import {Icon,SegmentedControl} from '@ant-design/react-native'
 import MasonryList from '../../../components/MasonryList/index';
 import PlacehoderImage from '../../../components/MasonryList/PlaceholderImage';
@@ -25,16 +25,25 @@ const secToTime = (s) => {
     return (h === 0 ? [zero(m), zero(s)].join(":") : [zero(h), zero(m), zero(s)].join(":"));
 }
 
-
+const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 export default class ContentWaterfall extends React.Component {
     static navigationOptions = ({navigation}) =>{
         return {
+            headerTitleStyle:{
+                alignSelf:'center',
+                textAlign: 'center',
+                flex:1,
+            },
+            headerTitleContainerStyle:{
+                left: TITLE_OFFSET,
+                right: TITLE_OFFSET,
+            },
             headerTitle: <SegmentedControl
                 style={{width:140}}
                 tintColor={'#f4511e'}
                 values={['发现', '附近']}
-                onChange={navigation.getParam('onSegChange')}
-                onValueChange={navigation.getParam('onValueChange')}
+                onChange={navigation.getParam('_onSegChange')}
+                onValueChange={navigation.getParam('_onValueChange')}
             />,
             headerLeft: (
                 <TouchableOpacity activeOpacity={0.7} style={{paddingLeft: 10}} onPress={() => alert('关注')}>
@@ -62,17 +71,23 @@ export default class ContentWaterfall extends React.Component {
         this.onRefreshing();
     }
 
-    onSegChange =(v)=>{
+    _onSegChange =(v)=>{
         alert(v)
     }
-    onValueChange = (v)=>{
+    _onValueChange = (v)=>{
         alert(v)
+    }
+
+    _onMomentumScrollEnd = ()=>{
+        // alert()
+        console.log(this.refs)
     }
 
     render() {
         return (
             <SafeAreaView style={styles.container}>
                 <MasonryList
+                    ref={'list'}
                     data={this.state.data}
                     numColumns={2}
                     renderItem={this._renderItem}
@@ -80,6 +95,7 @@ export default class ContentWaterfall extends React.Component {
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefreshing}
                     onEndReachedThreshold={0.5}
+                    onMomentumScrollEnd={this._onMomentumScrollEnd}
                     onEndReached={this._onEndReached}
                     keyExtractor={this._keyExtractor}
                 />
