@@ -63,6 +63,7 @@ export default class ContentWaterfall extends React.Component {
         this.state = {
             refreshing: false,
             data: [],
+            play:0,
             np: 0,
         }
     }
@@ -81,12 +82,18 @@ export default class ContentWaterfall extends React.Component {
     _onMomentumScrollEnd = ()=>{
         // alert()
     }
-
+    _playItemVideo(id){
+      console.log('play-',id);
+      this.setState({
+        play:id
+      })
+    }
     render() {
         return (
             <SafeAreaView style={styles.container}>
                 <MasonryList
                     ref={'list'}
+                    playItemVideo={(id)=>{this._playItemVideo(id)}}
                     data={this.state.data}
                     numColumns={2}
                     renderItem={this._renderItem}
@@ -148,6 +155,7 @@ export default class ContentWaterfall extends React.Component {
         const itemHeight = this._getHeightForItem({item});
         return (
           <VideoCard 
+          play={this.state.play}
           onPress = {()=>{this._onPressContent(item)}}
           item = {item}
           height={itemHeight}

@@ -122,6 +122,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _listRefs: Array<?VirtualizedList> = [];
     _scrollRef: ?ScrollView;
     _endsReached = 0;
+    vitem =[]
 
     componentWillReceiveProps(newProps: Props) {
         this.setState(_stateFromProps(newProps));
@@ -202,11 +203,10 @@ export default class MasonryList extends React.Component<Props, State> {
       let it = changed.viewableItems
       let indexforview = []
       for (let index = 0; index < it.length; index++) {
-        const element = it[index].key;
+        const element = it[index].item;
         indexforview.push(element)
-        
       }
-          console.log('changedf====',indexforview);
+      this.vitem = indexforview
         }
     _getItemLayout = (columnIndex, rowIndex) => {
         const column = this.state.columns[columnIndex];
@@ -222,7 +222,10 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItemCount = data => data.length;
 
     _getItem = (data, index) => data[index];
-  
+
+    scrend =()=>{
+      this.vitem.length>0 && this.props.playItemVideo(this.vitem[0].id)
+    }
     _captureScrollRef = ref => (this._scrollRef = ref);
     render() {
         const {
@@ -250,6 +253,8 @@ export default class MasonryList extends React.Component<Props, State> {
                         ref={ref => (this._listRefs[col.index] = ref)}
                         key={`$col_${col.index}`}
                         data={col.data}
+                        onMomentumScrollEnd = {()=>this.scrend()}
+                        onScrollEndDrag = {()=>this.scrend()}
                         getItemCount={this._getItemCount}
                         getItem={this._getItem}
                         getItemLayout={(data, index) =>
@@ -261,7 +266,6 @@ export default class MasonryList extends React.Component<Props, State> {
                         onEndReached={onEndReached}
                         onViewableItemsChanged={this._onViewableItemsChanged}
                         viewabilityConfig={VIEWABILITY_CONFIG}
-
                         onEndReachedThreshold={this.props.onEndReachedThreshold}
                         removeClippedSubviews={false}
                     />,

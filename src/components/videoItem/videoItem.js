@@ -13,17 +13,31 @@ export default class VideoItem extends Component {
             contentDidLoad: false,
         }
     }
+    shouldComponentUpdate(np,ns){
+      if (np.play == this.props.item.id || this.props.play == this.props.item.id) {
+        return true
+      }else{
+        return false
+      }
+    }
     render() {
-      const {item,height} = this.props
+      
+      const {item,height,play} = this.props
+      const {id} = item
         return (
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => this.props.onPress()}
             style={styles.item}>
-                <PlacehoderImage
+           
+           {play== id
+            ?<Text> {"Bofang"}</Text>
+            :<PlacehoderImage
                     source={{uri: item.video.thumbnail[0]}}
                     style={{width: itemWidth, height: height, borderRadius: 4}}
                 />
+            }
+                
                 <View style={styles.imgInfo}>
                     <Text>{item.text}</Text>
                 </View>
