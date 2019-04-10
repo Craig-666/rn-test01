@@ -15,9 +15,9 @@ type Column = {
     heights: Array<number>,
 };
 const VIEWABILITY_CONFIG = {
-	minimumViewTime: 30,
-	viewAreaCoveragePercentThreshold: 100,
-	waitForInteraction: false,
+	minimumViewTime: 500,
+	viewAreaCoveragePercentThreshold: 400,
+	waitForInteraction: true,
 };
 const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
     const columns: Array<Column> = Array.from({
