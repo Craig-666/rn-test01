@@ -60,6 +60,7 @@ export default class ContentWaterfall extends React.Component {
 
     constructor(props) {
         super(props);
+        this.hasPlayed = false
         this.state = {
             refreshing: false,
             data: [],
@@ -83,8 +84,12 @@ export default class ContentWaterfall extends React.Component {
         // alert()
     }
     _playItemVideo(id){
-      console.log('play-',id);
-      this.setState({
+      const {play} = this.state
+      console.log('play-',play,id);
+
+      id == play
+      ?null
+      :this.setState({
         play:id
       })
     }
@@ -123,7 +128,6 @@ export default class ContentWaterfall extends React.Component {
                     refreshing: false,
                     data: jsonData.list,
                     np: jsonData.info.np || 0,
-
                 })
             });
     }
@@ -156,17 +160,32 @@ export default class ContentWaterfall extends React.Component {
         return (
           <VideoCard 
           play={this.state.play}
+          askPlay={()=>this.askPlay()}
+          onNeedPlay={this._onNeedPlay}
           onPress = {()=>{this._onPressContent(item)}}
           item = {item}
           height={itemHeight}
           />
         )
     }
-
+    _onNeedPlay=()=>{
+      if (this.hasPlayed) {
+        
+      }
+    }
+    askPlay = () =>{
+      if (this.hasPlayed) {
+        return false  
+      }
+      this.hasPlayed = true
+      setTimeout(() => {
+        this.hasPlayed = false
+      }, 100);
+      return true
+    }
     _onPressContent = (item) => {
         this.props.navigation.navigate('Detail', {item: item});
     }
-
 }
 
 const styles = StyleSheet.create({

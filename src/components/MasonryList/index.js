@@ -15,9 +15,8 @@ type Column = {
     heights: Array<number>,
 };
 const VIEWABILITY_CONFIG = {
-	minimumViewTime: 10,
-	viewAreaCoveragePercentThreshold: 50,
-	waitForInteraction: true,
+  minimumViewTime: 500,
+  viewAreaCoveragePercentThreshold: 60,
 };
 const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
     const columns: Array<Column> = Array.from({
@@ -124,6 +123,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _endsReached = 0;
     vitem =[]
     scrolling=false
+    scrollTop=0
     componentWillReceiveProps(newProps: Props) {
         this.setState(_stateFromProps(newProps));
     }
@@ -222,9 +222,9 @@ export default class MasonryList extends React.Component<Props, State> {
     _getItemCount = data => data.length;
 
     _getItem = (data, index) => data[index];
-    scrend =(type)=>{
+    scrend =(type,event)=>{
+      const {scrolling,vitem} = this
       if(this.vitem.length==0){ return }
-      
       if (type == 'ds') {
         // drag start 运动开始
         this.scrolling = true  
@@ -232,23 +232,24 @@ export default class MasonryList extends React.Component<Props, State> {
       if (type == 'de') {
         // drag end 抬手
         this.scrolling = false
+        let self = this
         setTimeout(()=>{
-          if(!this.scrolling){
-            console.log('doplay-d');
+          if(!self.scrolling){
+            console.log('无滚动！',self.vitem[0]);
             this.scrolling = false
-            this.props.playItemVideo(this.vitem[0].id)
+            this.props.playItemVideo(self.vitem[0].id)
           }          
         },100);
       }else if (type == 'se') {
         // scroll end 滚动停止
-        console.log('doplay');
+        console.log('有滚动！');
+        if (scrolling) {
         this.scrolling = false
         this.props.playItemVideo(this.vitem[0].id)
+        }
       }else if(type == 'scrolling'){
-        // 滚动
-          if (this.scrolling == false) {
-            this.scrolling = true    
-          }
+        this.scrollTop = event.nativeEvent.contentOffset.y
+        this.scrolling = true    
       }
     }
     _captureScrollRef = ref => (this._scrollRef = ref);
@@ -278,12 +279,11 @@ export default class MasonryList extends React.Component<Props, State> {
                         ref={ref => (this._listRefs[col.index] = ref)}
                         key={`$col_${col.index}`}
                         data={col.data}
-                        onScrollBeginDrag= {()=>this.scrend('ds')}
-                        onScrollEndDrag = {()=>this.scrend('de')}
-                        onMomentumScrollBegin ={()=>this.scrend('ss')}
-                        onMomentumScrollEnd = {()=>this.scrend('se')}
-                        onScroll = {()=>this.scrend('scrolling')}
-                        
+                        onScrollBeginDrag= {(e)=>this.scrend('ds',e)}
+                        onScrollEndDrag = {(e)=>this.scrend('de',e)}
+                        onMomentumScrollBegin ={(e)=>this.scrend('ss',e)}
+                        onMomentumScrollEnd = {(e)=>this.scrend('se',e)}
+                        onScroll = {(e)=>this.scrend('scrolling',e)}
                         getItemCount={this._getItemCount}
                         getItem={this._getItem}
                         getItemLayout={(data, index) =>

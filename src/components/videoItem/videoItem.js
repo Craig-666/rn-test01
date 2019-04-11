@@ -13,29 +13,52 @@ export default class VideoItem extends Component {
         super();
         this.state = {
             contentDidLoad: false,
+            play:false
         }
     }
+    componentWillReceiveProps(np){
+      if (np.play == this.props.play) {
 
-    shouldComponentUpdate(np, ns) {
-        if (np.play == this.props.item.id || this.props.play == this.props.item.id) {
-            return true
-        } else {
-            return false
-        }
+      this.getLayout()
+      }
     }
+    getLayout(){
+      let self = this
+      this.refs.chatView.measure((x,y,width,height,pageX, pageY) => {
+        const {play} = this.state
+        if (pageY >0 && 500>pageY) {
+          let shouldPlay = this.props.askPlay()
+          console.log('aisss',shouldPlay);
+          // 1 如果在屏幕内而且在播放
+          if (shouldPlay) {
+            console.log('playyyyy');
+            this.setState({
+              play:true
+            })
+          }
+        }else if(play){
+          // 3 如果不在屏幕内但是在播放
+          this.setState({
+            play:false
+          })
+        }
 
+      })
+    }
+  
     render() {
-
-        const {item, height, play} = this.props
+        const {item, height} = this.props
         const {id} = item
+        const {play} = this.state
         return (
             <TouchableOpacity
+                ref = {'chatView'}
                 activeOpacity={0.7}
                 onPress={() => this.props.onPress()}
                 style={styles.item}>
-
-                {play === id
-                    ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}><Text>{'bofangzhong'}</Text></View>
+                {play
+                    // ? <Video style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
+                    ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
                     : <PlacehoderImage
                         source={{uri: item.video.thumbnail[0]}}
                         style={{width: itemWidth, height: height, borderRadius: 4}}
