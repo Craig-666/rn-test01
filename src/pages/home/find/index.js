@@ -123,12 +123,12 @@ export default class ContentWaterfall extends React.Component {
             })
             .then((jsonData) => {
                 console.log(jsonData)
-                // this.setState({
-                //     refreshing: false,
-                //     data: jsonData.list,
-                //     np: jsonData.info.np || 0,
-                //
-                // })
+                this.setState({
+                    refreshing: false,
+                    data: jsonData.list,
+                    np: jsonData.info.np || 0,
+
+                })
             }).catch(e=>{
                 alert(e.toString())
         });
