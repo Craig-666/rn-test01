@@ -25,18 +25,12 @@ const secToTime = (s) => {
     return (h === 0 ? [zero(m), zero(s)].join(":") : [zero(h), zero(m), zero(s)].join(":"));
 }
 
-const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 export default class ContentWaterfall extends React.Component {
     static navigationOptions = ({navigation}) =>{
         return {
-            headerTitleStyle:{
-                alignSelf:'center',
+            headerTitleStyle: {
                 textAlign: 'center',
-                flex:1,
-            },
-            headerTitleContainerStyle:{
-                left: TITLE_OFFSET,
-                right: TITLE_OFFSET,
+                flex: 1,
             },
             headerTitle: <SegmentedControl
                 style={{width:140}}
@@ -121,15 +115,23 @@ export default class ContentWaterfall extends React.Component {
         // const { api } = this.props;
         const {np} = this.state
         let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-ios-4.5.9/${np}-20.json`
+        // let api = `http://192.168.101.39:9001/server/backstage/admin/list`
         fetch(api)
-            .then((response) => response.json())
+            .then((response) => {
+                console.log('response',response)
+                response.json()
+            })
             .then((jsonData) => {
-                this.setState({
-                    refreshing: false,
-                    data: jsonData.list,
-                    np: jsonData.info.np || 0,
-                })
-            });
+                console.log(jsonData)
+                // this.setState({
+                //     refreshing: false,
+                //     data: jsonData.list,
+                //     np: jsonData.info.np || 0,
+                //
+                // })
+            }).catch(e=>{
+                alert(e.toString())
+        });
     }
 
     _onEndReached = () => {
@@ -170,12 +172,12 @@ export default class ContentWaterfall extends React.Component {
     }
     _onNeedPlay=()=>{
       if (this.hasPlayed) {
-        
+
       }
     }
     askPlay = () =>{
       if (this.hasPlayed) {
-        return false  
+        return false
       }
       this.hasPlayed = true
       setTimeout(() => {
@@ -186,6 +188,7 @@ export default class ContentWaterfall extends React.Component {
     _onPressContent = (item) => {
         this.props.navigation.navigate('Detail', {item: item});
     }
+
 }
 
 const styles = StyleSheet.create({

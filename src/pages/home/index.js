@@ -17,6 +17,9 @@ export default createStackNavigator(
             headerStyle: {
                 backgroundColor: '#fff',
             },
+            headerTitleContainerStyle:{
+                justifyContent:'center'
+            },
             headerTintColor: '#f4511e',
             // headerTitleStyle: {
             //     fontWeight: 'bold',
