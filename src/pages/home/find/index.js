@@ -120,34 +120,154 @@ export default class ContentWaterfall extends React.Component {
         })
         // const { api } = this.props;
         const {np} = this.state
-        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-ios-4.5.9/${np}-20.json`
-        fetch(api)
-            .then((response) => response.json())
-            .then((jsonData) => {
-                this.setState({
-                    refreshing: false,
-                    data: jsonData.list,
-                    np: jsonData.info.np || 0,
-                })
-                
-            }).catch(e=>{
-              alert(e.toString())
-            });
+      let fakeData = {
+        "status": 9,
+        "rating": "4",
+        "cate": "",
+        "tags": [{
+          "post_number": 1322896,
+          "image_list": "http://img.spriteapp.cn/ugc/2017/06/b85ce2344a7d11e791b6842b2b4c75ab.png",
+          "forum_sort": 0,
+          "forum_status": 2,
+          "id": 55163,
+          "info": "",
+          "name": "\u4e3b\u7248\u5757",
+          "colum_set": 2,
+          "tail": "\u59d0\u592b(\u4e71\u9009\u5206\u7c7b\u4f1a\u88ab\u7248\u4e3b\u5220\u5e16\u54e6)",
+          "sub_number": 93490,
+          "display_level": 0
+        }],
+        "bookmark": "0",
+        "text": "没有借口就是最好借口",
+        "is_best": 0,
+        "video_signs": 0,
+        "share_url": "http://a.f.budejie.com/share/29381184.html?wx.qq.com",
+        "up": "58",
+        "down": 4,
+        "forward": 0,
+        "u": {
+          "header": ["https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg", 
+          "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"],
+          "relationship": 0,
+          "uid": "23017420",
+          "is_vip": false,
+          "is_v": false,
+          "room_url": "",
+          "room_name": "",
+          "room_role": "",
+          "room_icon": "",
+          "name": "\u989c\u738b\u7237"
+        },
+        "passtime": "2019-04-11 09:26:45",
+        "video": {
+          "playfcount": 1,
+          "height": 480,
+          "width": 852,
+          "video": ["http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"
+          , "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+           "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"],
+          "download": ["http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+           "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+            "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"],
+          "duration": 64,
+          "playcount": 83,
+          "thumbnail": ["https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg", 
+          "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"],
+          "thumbnail_small": ["http://wimg.spriteapp.cn/crop/150x150/picture/2019/0411/a302257e-5bf7-11e9-b3f2-1866daeb0df1_wpd.jpg", 
+          "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"]
+        },
+        "type": "video",
+        "id": "29381184",
+        "comment": "0"
+      }
+      let fakeList = []
+      for (let i = 0; i < 10; i++) {
+        fakeData.video.thumbnailpic = 'https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock'+i+'.jpg'
+        fakeList.push(fakeData)
+      }
+      this.setState({
+        refreshing: false,
+        data: fakeList,
+        np: 0,
+    })
+       
     }
 
     _onEndReached = () => {
         // const { api } = this.props;
         // fetch(api(this.state.np))
         const {np} = this.state
-        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-ios-4.5.9/${np}-20.json`
-        fetch(api)
-            .then((response) => response.json())
-            .then((jsonData) => {
-                this.setState({
-                    data: [...this.state.data, ...jsonData.list],
-                    np: jsonData.info.np,
-                })
-            });
+        let fakeData = {
+          "status": 9,
+          "rating": "4",
+          "cate": "",
+          "tags": [{
+            "post_number": 1322896,
+            "image_list": "http://img.spriteapp.cn/ugc/2017/06/b85ce2344a7d11e791b6842b2b4c75ab.png",
+            "forum_sort": 0,
+            "forum_status": 2,
+            "id": 55163,
+            "info": "",
+            "name": "\u4e3b\u7248\u5757",
+            "colum_set": 2,
+            "tail": "\u59d0\u592b(\u4e71\u9009\u5206\u7c7b\u4f1a\u88ab\u7248\u4e3b\u5220\u5e16\u54e6)",
+            "sub_number": 93490,
+            "display_level": 0
+          }],
+          "bookmark": "0",
+          "text": "没有借口就是最好借口",
+          "is_best": 0,
+          "video_signs": 0,
+          "share_url": "http://a.f.budejie.com/share/29381184.html?wx.qq.com",
+          "up": "58",
+          "down": 4,
+          "forward": 0,
+          "u": {
+            "header": ["https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg", 
+            "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"],
+            "relationship": 0,
+            "uid": "23017420",
+            "is_vip": false,
+            "is_v": false,
+            "room_url": "",
+            "room_name": "",
+            "room_role": "",
+            "room_icon": "",
+            "name": "\u989c\u738b\u7237"
+          },
+          "passtime": "2019-04-11 09:26:45",
+          "video": {
+            "playfcount": 1,
+            "height": 480,
+            "width": 852,
+            "video": ["http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"
+            , "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+             "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"],
+            "download": ["http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+             "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4",
+              "http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4"],
+            "duration": 64,
+            "playcount": 83,
+            "thumbnail": ["https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg", 
+            "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"],
+            "thumbnail_small": ["http://wimg.spriteapp.cn/crop/150x150/picture/2019/0411/a302257e-5bf7-11e9-b3f2-1866daeb0df1_wpd.jpg", 
+            "https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock0.jpg"]
+          },
+          "type": "video",
+          "id": "29381184",
+          "comment": "0"
+        }
+        let fakeList = []
+        for (let i = 0; i < 10; i++) {
+        fakeData.video.thumbnail[0] = 'https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock'+i+'.jpg'
+
+          fakeList.push(fakeData)
+        }
+        this.setState({
+          data: [...this.state.data, ...fakeList],
+          np: 12,
+      })
+       
     }
 
     _keyExtractor = (item, index) => {

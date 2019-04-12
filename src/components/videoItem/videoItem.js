@@ -15,6 +15,7 @@ export default class VideoItem extends Component {
             contentDidLoad: false,
             play:false
         }
+        this.picurl=this.randomNum(0,40)
     }
     componentWillReceiveProps(np){
       if (np.play !== this.props.play) {
@@ -44,11 +45,33 @@ export default class VideoItem extends Component {
 
       })
     }
-  
+    randomNum(minNum,maxNum){ 
+      switch(arguments.length){ 
+          case 1: 
+              return parseInt(Math.random()*minNum+1,10); 
+          break; 
+          case 2: 
+              return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+          break; 
+              default: 
+                  return 0; 
+              break; 
+      } 
+  } 
     render() {
         const {item, height} = this.props
         const {id} = item
         const {play} = this.state
+      let urls = [
+      'http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4',
+      'http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25a3cd595285890787760941185/zrHmydLH3F0A.mp4',
+      'http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25de7d615285890787760979227/ES7m2U0ZIJYA.mp4',
+      'http://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25a34d745285890787760940460/V7ACRlqwZeQA.mp4',
+      ]
+      let url = urls[this.randomNum(0,3)]
+      const {picurl} = this
+      
+      console.log('rdmmmm',picurl);
         return (
             <TouchableOpacity
                 ref = {'chatView'}
@@ -56,10 +79,10 @@ export default class VideoItem extends Component {
                 onPress={() => this.props.onPress()}
                 style={styles.item}>
                 {play
-                    ? <Video muted={true} style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
+                    ? <Video muted={true} style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:url}}/>
                     // ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
                     : <PlacehoderImage
-                        source={{uri: item.video.thumbnail[0]}}
+                        source={{uri: `https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock${picurl}.jpg`}}
                         style={{width: itemWidth, height: height, borderRadius: 4}}
                     />
                 }
