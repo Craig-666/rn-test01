@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity,Platform} from "react-native";
-import {Icon,SegmentedControl} from '@ant-design/react-native'
+import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity, Platform} from "react-native";
+import {Icon, SegmentedControl} from '@ant-design/react-native'
 import MasonryList from '../../../components/MasonryList/index';
 import VideoCard from '../../../components/videoItem/videoItem';
+import {fetchData} from "../../../utils/fetch";
 
 const {width, height} = Dimensions.get('window');
 
@@ -25,21 +26,15 @@ const secToTime = (s) => {
     return (h === 0 ? [zero(m), zero(s)].join(":") : [zero(h), zero(m), zero(s)].join(":"));
 }
 
-const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 56;
 export default class ContentWaterfall extends React.Component {
-    static navigationOptions = ({navigation}) =>{
+    static navigationOptions = ({navigation}) => {
         return {
-            headerTitleStyle:{
-                alignSelf:'center',
+            headerTitleStyle: {
                 textAlign: 'center',
-                flex:1,
-            },
-            headerTitleContainerStyle:{
-                left: TITLE_OFFSET,
-                right: TITLE_OFFSET,
+                flex: 1,
             },
             headerTitle: <SegmentedControl
-                style={{width:140}}
+                style={{width: 140}}
                 tintColor={'#f4511e'}
                 values={['发现', '附近']}
                 onChange={navigation.getParam('_onSegChange')}
@@ -47,7 +42,7 @@ export default class ContentWaterfall extends React.Component {
             />,
             headerLeft: (
                 <TouchableOpacity activeOpacity={0.7} style={{paddingLeft: 10}} onPress={() => alert('关注')}>
-                    <Text style={{color:'#f4511e'}}><Icon color={'#f4511e'} name={'heart'}/>关注</Text>
+                    <Text style={{color: '#f4511e'}}><Icon color={'#f4511e'} name={'heart'}/>关注</Text>
                 </TouchableOpacity>
             ),
             headerRight: (
@@ -64,7 +59,7 @@ export default class ContentWaterfall extends React.Component {
         this.state = {
             refreshing: false,
             data: [],
-            play:0,
+            play: 0,
             np: 0,
         }
     }
@@ -73,14 +68,14 @@ export default class ContentWaterfall extends React.Component {
         this.onRefreshing();
     }
 
-    _onSegChange =(v)=>{
+    _onSegChange = (v) => {
         alert(v)
     }
-    _onValueChange = (v)=>{
+    _onValueChange = (v) => {
         alert(v)
     }
 
-    _onMomentumScrollEnd = ()=>{
+    _onMomentumScrollEnd = () => {
         // alert()
     }
     _playItemVideo(id){
@@ -120,34 +115,34 @@ export default class ContentWaterfall extends React.Component {
         })
         // const { api } = this.props;
         const {np} = this.state
-        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-ios-4.5.9/${np}-20.json`
-        fetch(api)
-            .then((response) => response.json())
-            .then((jsonData) => {
-                this.setState({
-                    refreshing: false,
-                    data: jsonData.list,
-                    np: jsonData.info.np || 0,
-                })
-                
-            }).catch(e=>{
-              alert(e.toString())
-            });
+        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-${Platform.OS}-4.5.9/${np}-20.json`
+        // let api = `http://192.168.101.39:9001/server/backstage/admin/list`
+        fetchData(api).then(res => {
+
+            this.setState({
+                refreshing: false,
+                data: res.list,
+                np: res.info.np,
+            })
+        }).catch(err => {
+            alert(err)
+        })
     }
 
     _onEndReached = () => {
         // const { api } = this.props;
         // fetch(api(this.state.np))
         const {np} = this.state
-        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-ios-4.5.9/${np}-20.json`
-        fetch(api)
-            .then((response) => response.json())
-            .then((jsonData) => {
-                this.setState({
-                    data: [...this.state.data, ...jsonData.list],
-                    np: jsonData.info.np,
-                })
-            });
+        let api = `http://d.api.budejie.com/topic/list/zuixin/41/bs0315-${Platform.OS}-4.5.9/${np}-20.json`
+        fetchData(api).then(res => {
+            this.setState({
+                data: [...this.state.data, ...res.list],
+                np: res.info.np,
+            })
+        }).catch(err => {
+            alert(err)
+        })
+
     }
 
     _keyExtractor = (item, index) => {
@@ -173,12 +168,12 @@ export default class ContentWaterfall extends React.Component {
     }
     _onNeedPlay=()=>{
       if (this.hasPlayed) {
-        
+
       }
     }
     askPlay = () =>{
       if (this.hasPlayed) {
-        return false  
+        return false
       }
       this.hasPlayed = true
       setTimeout(() => {
@@ -212,14 +207,14 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4
     },
-    imgInfo:{
+    imgInfo: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        height:40,
+        height: 40,
         paddingHorizontal: 10,
     }
 })
