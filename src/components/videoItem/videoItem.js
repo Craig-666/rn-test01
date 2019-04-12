@@ -65,8 +65,9 @@ export default class VideoItem extends Component {
       let urls = [
         'https://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25a34d745285890787760940460/V7ACRlqwZeQA.mp4',
         'https://1256579377.vod2.myqcloud.com/86762676vodcq1256579377/25eb9dd65285890787760980017/ibapZCxqNa8A.mp4',
+        'https://pull.linshang.com/live/test.m3u8',
       ]
-      let url = urls[this.randomNum(0,1)]
+      let url = urls[this.randomNum(0,2)]
       const {picurl} = this
       
       console.log('rdmmmm',picurl);
