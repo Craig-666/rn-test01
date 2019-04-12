@@ -30,7 +30,6 @@ export default class VideoPage extends Component {
   }
   videoError(e){
     console.log('verror',e);
-    this.refs.toast.show('直播暂时无法直播!');
 
   }
   renderDanmu(){
@@ -56,7 +55,8 @@ export default class VideoPage extends Component {
       <View>
          <Video
             source={{
-              uri: 'http://pull.linshang.com/live/test.m3u8',
+              
+              uri: 'https://pull.linshang.com/live/test.m3u8',
             }}
             ref={(ref) => {
               this.player = ref
@@ -85,8 +85,6 @@ export default class VideoPage extends Component {
                       <Text style={styles.watching}>100人正在看直播</Text>
                     </View>
                   </View>
-                
-                    
                     <View style = {styles.danmu}>
                       {this.renderDanmu()}
                     </View>
