@@ -56,7 +56,7 @@ export default class VideoPage extends Component {
       <View>
          <Video
             source={{
-              uri: 'http://live6.plus.hebtv.com/cctv12/sd/live.m3u8',
+              uri: 'http://pull.linshang.com/live/test.m3u8',
             }}
             ref={(ref) => {
               this.player = ref

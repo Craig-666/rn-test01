@@ -56,7 +56,7 @@ export default class VideoItem extends Component {
                 onPress={() => this.props.onPress()}
                 style={styles.item}>
                 {play
-                    ? <Video style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
+                    ? <Video muted={true} style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
                     // ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
                     : <PlacehoderImage
                         source={{uri: item.video.thumbnail[0]}}
