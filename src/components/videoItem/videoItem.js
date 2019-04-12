@@ -82,7 +82,7 @@ export default class VideoItem extends Component {
                     ? <Video muted={true} style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:url}}/>
                     // ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
                     : <PlacehoderImage
-                        source={{uri: `https://linshang2018-1256579377.cos.ap-guangzhou.myqcloud.com/live/cock${picurl}.jpg`}}
+                        source={{uri: `https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4`}}
                         style={{width: itemWidth, height: height, borderRadius: 4}}
                     />
                 }

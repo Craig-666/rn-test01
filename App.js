@@ -8,14 +8,7 @@
 <script src="http://192.168.101.61:8097"></script>
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import {Icon, SearchBar, TabBar,Button,Carousel,SegmentedControl, WhiteSpace} from "@ant-design/react-native";
 import Home from './src/pages/home/index'
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-      'Double tap R on your keyboard to reload,\n' +
-      'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -25,23 +18,7 @@ export default class App extends Component<Props> {
       selectedTab: 'redTab',
     };
   }
-  renderContent(pageText) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
-          <SearchBar placeholder="Search" showCancelButton />
-          <Text style={{ margin: 50 }}>{pageText}</Text>
-        </View>
-    );
-  }
-  onChangeTab(tabName) {
-    this.setState({
-      selectedTab: tabName,
-    });
-  }
-  onHorizontalSelectedIndexChange(index) {
-    /* tslint:disable: no-console */
-    console.log('horizontal change to', index);
-  }
+
   render() {
     return (
         <Home/>
