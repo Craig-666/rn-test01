@@ -17,9 +17,8 @@ export default class VideoItem extends Component {
         }
     }
     componentWillReceiveProps(np){
-      if (np.play == this.props.play) {
-
-      this.getLayout()
+      if (np.play !== this.props.play) {
+        this.getLayout()
       }
     }
     getLayout(){
@@ -57,8 +56,8 @@ export default class VideoItem extends Component {
                 onPress={() => this.props.onPress()}
                 style={styles.item}>
                 {play
-                    // ? <Video style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
-                    ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
+                    ? <Video style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}/>
+                    // ? <View style={{width: itemWidth, height: height, borderRadius: 4}} source={{uri:item.video.video[1]}}></View>
                     : <PlacehoderImage
                         source={{uri: item.video.thumbnail[0]}}
                         style={{width: itemWidth, height: height, borderRadius: 4}}

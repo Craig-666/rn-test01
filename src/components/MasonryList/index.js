@@ -121,7 +121,7 @@ export default class MasonryList extends React.Component<Props, State> {
     _listRefs: Array<?VirtualizedList> = [];
     _scrollRef: ?ScrollView;
     _endsReached = 0;
-    vitem =[]
+    playid=0
     scrolling=false
     scrollTop=0
     componentWillReceiveProps(newProps: Props) {
@@ -223,8 +223,7 @@ export default class MasonryList extends React.Component<Props, State> {
 
     _getItem = (data, index) => data[index];
     scrend =(type,event)=>{
-      const {scrolling,vitem} = this
-      if(this.vitem.length==0){ return }
+      const {scrolling,playid} = this
       if (type == 'ds') {
         // drag start 运动开始
         this.scrolling = true  
@@ -235,9 +234,9 @@ export default class MasonryList extends React.Component<Props, State> {
         let self = this
         setTimeout(()=>{
           if(!self.scrolling){
-            console.log('无滚动！',self.vitem[0]);
-            this.scrolling = false
-            this.props.playItemVideo(self.vitem[0].id)
+            self.scrolling = false
+            self.playid +=1
+            self.props.playItemVideo(self.playid)
           }          
         },100);
       }else if (type == 'se') {
@@ -245,7 +244,8 @@ export default class MasonryList extends React.Component<Props, State> {
         console.log('有滚动！');
         if (scrolling) {
         this.scrolling = false
-        this.props.playItemVideo(this.vitem[0].id)
+        this.playid +=1
+        this.props.playItemVideo(this.playid)
         }
       }else if(type == 'scrolling'){
         this.scrollTop = event.nativeEvent.contentOffset.y
@@ -270,7 +270,6 @@ export default class MasonryList extends React.Component<Props, State> {
         if (ListEmptyComponent) {
             emptyElement = <ListEmptyComponent />;
         }
-
         const content = (
             <View style={styles.contentContainer}>
                 {this.state.columns.map(col =>
@@ -293,8 +292,6 @@ export default class MasonryList extends React.Component<Props, State> {
                         renderScrollComponent={this._renderScrollComponent}
                         keyExtractor={keyExtractor}
                         onEndReached={onEndReached}
-                        onViewableItemsChanged={this._onViewableItemsChanged}
-                        viewabilityConfig={VIEWABILITY_CONFIG}
                         onEndReachedThreshold={this.props.onEndReachedThreshold}
                         removeClippedSubviews={false}
                     />,
